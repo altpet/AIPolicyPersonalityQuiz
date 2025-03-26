@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which AI Policy Think Tank Are You? - April Fools Quiz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .april-fools {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+            color: #e74c3c;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .question-container {
+            margin-bottom: 30px;
+        }
+        
+        .question {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        label {
+            display: block;
+            padding: 12px 15px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        label:hover {
+            background-color: #d6eaf8;
+        }
+        
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        #prev-button {
+            visibility: hidden;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #3498db;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .result-container {
+            display: none;
+            text-align: center;
+        }
+        
+        .result-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .result-description {
+            margin-bottom: 20px;
+            text-align: left;
+            line-height: 1.6;
+        }
+        
+        .share-buttons {
+            margin-top: 20px;
+        }
+        
+        .restart-button {
+            margin-top: 20px;
+            background-color: #e74c3c;
+        }
+        
+        .restart-button:hover {
+            background-color: #c0392b;
+        }
+        
+        .result-score {
+            margin-top: 30px;
+            font-size: 14px;
+            text-align: left;
+        }
+        
+        .org-score {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .score-bar-container {
+            width: 60%;
+            background-color: #ecf0f1;
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        
+        .score-bar {
+            height: 100%;
+            background-color: #3498db;
+            border-radius: 5px;
+            width: 0;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .quiz-container {
+                padding: 15px;
+            }
+            
+            .question {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Which AI Policy Think Tank Are You?</h1>
+    <p class="april-fools">AI Policy Personality Test - April Fools' Edition</p>
+    
+    <div class="intro">
+        <p>Answer these questions about AI policy to find out which think tank or organization matches your views!</p>
+    </div>
+    
+    <div class="quiz-container">
+        <div class="progress-bar">
+            <div class="progress" id="progress-bar"></div>
+        </div>
+        
+        <div id="quiz">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="navigation">
+            <button id="prev-button">Previous</button>
+            <button id="next-button">Next</button>
+        </div>
+    </div>
+    
+    <div class="result-container" id="result">
+        <div class="quiz-container">
+            <div class="result-header">You are most like: <span id="result-org"></span></div>
+            <div class="result-description" id="result-description"></div>
+            
+            <div class="result-score">
+                <h3>Your Organization Matches:</h3>
+                <div id="org-scores">
+                    <!-- Organization scores will be displayed here -->
+                </div>
+            </div>
+            
+            <div class="share-buttons">
+                <button onclick="shareResult()">Share Result</button>
+            </div>
+            <button class="restart-button" onclick="restartQuiz()">Take the Quiz Again</button>
+        </div>
+    </div>
+    
+    <script>
+        // Complete list of questions with all answers and their weightings
+        const questions = [
+            {
+                question: "How do you feel about money?",
+                answers: [
+                    {
+                        text: "You guys are getting paid?",
+                        scores: {
+                            "Ada Lovelace Institute": 1,
+                            "AI Now": 0,
+                            "Anthropic": -1,
+                            "Future of Life Institute": 1,
+                            "MIRI": 1,
+                            "PAUSE AI": 1
+                        }
+                    },
+                    {
+                        text: "Important enough to sign an NDA",
+                        scores: {
+                            "OpenAI": 2,
+                            "Meta": 1,
+                            "Google DeepMind": 1,
+                            "Anthropic": 0,
+                            "Center for AI Safety": -1
+                        }
+                    },
+                    {
+                        text: "How else do you get Politico to cover you?",
+                        scores: {
+                            "c.f.g": 1,
+                            "Centre for the Governance of AI": 1,
+                            "RAND Corporation": 1,
+                            "Tony Blair Institute for Global Change": 1
+                        }
+                    },
+                    {
+                        text: "bonds mature slower than my AGI timelines.",
+                        scores: {
+                            "Center for AI Safety": 1,
+                            "MIRI": 2,
+                            "Future of Life Institute": 1,
+                            "Epoch AI": 1
+                        }
+                    }
+                ]
+            },
+            {
+                question: "Does size (FLOPS) matter?",
+                answers: [
+                    {
+                        text: "Yes",
+                        scores: {
+                            "Anthropic": 1,
+                            "Google DeepMind": 2,
+                            "OpenAI": 1,
+                            "xAI": 1,
+                            "DeepSeek": 1,
+                            "Mistral AI": 1
+                        }
+                    },
+                    {
+                        text: "Don't flopshame.",
+                        scores: {
+                            "Future of Life Institute": 1,
+                            "AI Now": 1,
+                            "Ada Lovelace Institute": 1,
+                            "PAUSE AI": 1
+                        }
+                    },
+                    {
+                        text: "It's FLOPs, not FLOPS",
+                        scores: {
+                            "c.f.g": 1,
+                            "Centre for the Governance of AI": 1,
+                            "MIRI": 1,
+                            "Epoch AI": 1,
+                            "Google DeepMind": 0
+                        }
+                    }
+                ]
+            },
+            {
+                question: "How do you publish your work?",
+                answers: [
+                    {
+                        text: "arXiv",
+                        scores: {
+                            "Google DeepMind": 2,
+                            "Meta": 1,
+                            "Epoch AI": 1,
+                            "Anthropic": 0,
+                            "OpenAI": 0
+                        }
+                    },
+                    {
+                        text: "Blogpost",
+                        scores: {
+                            "Anthropic": 1,
+                            "c.f.g": 1,
+                            "OpenAI": 1,
+                            "Centre for the Governance of AI": 1
+                        }
+                    },
+                    {
+                        text: "Torrent Link",
+                        scores: {
+                            "PAUSE AI": 1,
+                            "MIRI": 1,
+                            "Future of Life Institute": 0
+                        }
+                    },
+                    {
+                        text: "phone in the faraday cage plz",
+                        scores: {
+                            "Future of Life Institute": 1,
+                            "Center for AI Safety": 1,
+                            "PAUSE AI": 1
+                        }
+                    },
+                    {
+                        text: "Journal of the European Union",
+                        scores: {
+                            "CEPS": 2,
+                            "EU AI Office": 2,
+                            "Tony Blair Institute for Global Change": 0
+                        }
+                    }
+                ]
+            },
+            {
+                question: "What do people think of your name?",
+                answers: [
+                    {
+                        text: "Kinda ironic ngl",
+                        scores: {
+                            "OpenAI": 2,
+                            "Future of Life Institute": 1,
+                            "c.f.g": 0
+                        }
+                    },
+                    {
+                        text: "Centre for what?",
+                        scores: {
+                            "c.f.g": 1,
+                            "Center for AI Safety": 1,
+                            "Centre for the Governance of AI": 2
+                        }
+                    },
+                    {
+                        text: "No hablo inglés",
+                        scores: {
+                            "Observatorio de Riesgos Catastróficos Globales": 2,
+                            "Mistral AI": 1,
+                            "CEPS": 0
+                        }
+                    },
+                    {
+                        text: "idk my mum gave it to me",
+                        scores: {
+                            "Future of Life Institute": 1,
+                            "The Future Society": 1,
+                            "AI Now": 0
+                        }
+                    }
+                ]
+            },
+            {
+                question: "Favourite social media platform",
+                answers: [
+                    {
+                        text: "Twitter (not X)",
+                        scores: {
+                            "c.f.g": 1,
+                            "Center for AI Safety": 1,
+                            "Ada Lovelace Institute": 1,
+                            "Anthropic": 0,
+                            "AI Now": 0
+                        }
+                    },
+                    {
+                        text: "X 😎",
+                        scores: {
+                            "xAI": 2,
+                            "MIRI": 1,
+                            "Future of Life Institute": 0,
+                            "Ada Lovelace Institute": -1
+                        }
+                    },
+                    {
+                        text: "Bluesky",
+                        scores: {
+                            "Ada Lovelace Institute": 1,
+                            "AI Now": 1,
+                            "OpenAI": 0,
+                            "xAI": -1
+                        }
+                    },
+                    {
+                        text: "LinkedIn",
+                        scores: {
+                            "c.f.g": 1,
+                            "Tony Blair Institute for Global Change": 1,
+                            "RAND Corporation": 1,
+                            "EU AI Office": 1
+                        }
+                    },
+                    {
+                        text: "Threads",
+                        scores: {
+                            "Meta": 2,
+                            "Epoch AI": 0,
+                            "Anthropic": 0,
+                            "xAI": -1
+                        }
+                    }
+                ]
+            },
+            {
+                question: "What do you think of AI Safety?",
+                answers: [
+                    {
+                        text: "Gets too much attention",
+                        scores: {
+                            "Ada Lovelace Institute": 1,
+                            "AI Now": 1,
+                            "Meta": 0,
+                            "IAPS (Institute for AI Policy and Strategy)": 0,
+                            "Center for AI Safety": -2,
+                            "MIRI": -2
+                        }
+                    },
+                    {
+                        text: "Gets too little attention",
+                        scores: {
+                            "Anthropic": 1,
+                            "Center for AI Safety": 1,
+                            "MIRI": 2,
+                            "Future of Life Institute": 1,
+                            "OpenAI": 0,
+                            "AI Now": -1
+                        }
+                    },
+                    {
+                        text: "Do you mean AI security?",
+                        scores: {
+                            "Anthropic": 1,
+                            "Meta": 1,
+                            "EU AI Office": 1,
+                            "MIRI": -1,
+                            "Future of Life Institute": -1
+                        }
+                    },
+                    {
+                        text: "We must balance the risks and opportunities",
+                        scores: {
+                            "Tony Blair Institute for Global Change": 2,
+                            "CEPS": 1,
+                            "EU AI Office": 1,
+                            "RAND Corporation": 1,
+                            "PAUSE AI": -1
+                        }
+                    }
+                ]
+            },
+            {
+                question: "Fave policy intervention?",
+                answers: [
+                    {
+                        text: "Build State Capacity",
+                        scores: {
+                            "Tony Blair Institute for Global Change": 2,
+                            "EU AI Office": 1,
+                            "CEPS": 1,
+                            "RAND Corporation": 1,
+                            "The Future Society": 1,
+                            "Ada Lovelace Institute": 0
+                        }
+                    },
+                    {
+                        text: "Regulation",
+                        scores: {
+                            "Ada Lovelace Institute": 1,
+                            "Anthropic": 1,
+                            "Center for AI Safety": 1,
+                            "EU AI Office": 2,
+                            "CEPS": 1,
+                            "OpenAI": 0,
+                            "Meta": -1
+                        }
+                    },
+                    {
+                        text: "CERN for AI",
+                        scores: {
+                            "c.f.g": 2,
+                            "Centre for the Governance of AI": 2,
+                            "Epoch AI": 1,
+                            "Google DeepMind": 0,
+                            "OpenAI": 0,
+                            "RAND Corporation": 0
+                        }
+                    },
+                    {
+                        text: "Self regulation",
+                        scores: {
+                            "Meta": 2,
+                            "Google DeepMind": 1,
+                            "OpenAI": 1,
+                            "Anthropic": 0,
+                            "AI Now": -1,
+                            "Ada Lovelace Institute": -1
+                        }
+                    },
+                    {
+                        text: "Blow up a data centre",
+                        scores: {
+                            "PAUSE AI": 2,
+                            "Future of Life Institute": 0,
+                            "MIRI": 0,
+                            "Meta": -2,
+                            "OpenAI": -2,
+                            "Google DeepMind": -2
+                        }
+                    }
+                ]
+            }
+        ];
+        
+        // Organization descriptions
+        const organizations = [
+            {
+                name: "Ada Lovelace Institute",
+                description: "You're the Ada Lovelace Institute! You prioritize ethics, rights, and justice in AI development. You're deeply concerned about algorithmic bias, discrimination, and ensuring tech aligns with societal values. You likely believe powerful AI systems need strong external regulation rather than industry self-governance."
+            },
+            {
+                name: "AI Now",
+                description: "You're AI Now! You focus on the social implications of AI with a critical lens on power dynamics in tech. You're concerned about labor issues, surveillance, and discrimination in AI systems. You believe in centering marginalized communities in AI ethics discussions and are skeptical of big tech's self-regulation efforts."
+            },
+            {
+                name: "Anthropic",
+                description: "You're Anthropic! You believe in building frontier AI systems that are steerable, interpretable, and honest. While you work on advanced AI capabilities, you emphasize the importance of safety research and responsible deployment practices. You advocate for thoughtful regulation while maintaining industry innovation."
+            },
+            {
+                name: "c.f.g",
+                description: "You're c.f.g! You take an academic approach to AI governance challenges and focus on global coordination mechanisms. You're likely concerned about technical AI safety but also emphasize institutional design and governance frameworks to manage advanced AI. You publish thoughtful analyses without being alarmist."
+            },
+            {
+                name: "Center for AI Safety",
+                description: "You're the Center for AI Safety! You're focused on reducing catastrophic risks from advanced AI systems through technical research. You're concerned about alignment problems and the potential for unintended consequences from powerful AI. You advocate for safety measures while acknowledging the benefits of AI progress."
+            },
+            {
+                name: "Centre for the Governance of AI",
+                description: "You're the Centre for the Governance of AI! You conduct research on governance challenges posed by transformative AI and aim to build the field of AI governance. You likely take a balanced, evidence-based approach to analyzing AI risks and opportunities, with an eye toward institutional design."
+            },
+            {
+                name: "CEPS",
+                description: "You're CEPS! As a European think tank, you approach AI policy from a distinctly EU perspective, emphasizing values like human dignity, freedom, democracy, and rule of law. You're likely focused on regulatory frameworks that protect rights while enabling European innovation and competitiveness."
+            },
+            {
+                name: "Epoch AI",
+                description: "You're Epoch AI! You focus on AI forecasting and understanding the trajectory of AI capabilities. You take a data-driven approach to analyzing AI progress and believe that good forecasting is essential for effective governance and risk management."
+            },
+            {
+                name: "EU AI Office",
+                description: "You're the EU AI Office! You believe in creating a balanced regulatory framework for AI that protects fundamental rights while enabling European innovation. You take a thorough, considered approach to policy and are focused on implementing the EU AI Act and other regulatory measures."
+            },
+            {
+                name: "Future of Life Institute",
+                description: "You're the Future of Life Institute! You're concerned about existential risks from advanced technologies and advocate for cautious, thoughtful AI development. You likely support pauses or slowdowns in cutting-edge AI development to allow safety research and governance mechanisms to catch up."
+            },
+            {
+                name: "Google DeepMind",
+                description: "You're Google DeepMind! You're working on cutting-edge AI research while trying to address safety concerns. You believe in scientific progress coupled with responsible innovation and likely support a mix of industry self-regulation and government oversight."
+            },
+            {
+                name: "IAPS (Institute for AI Policy and Strategy)",
+                description: "You're IAPS! You take a balanced approach to AI governance, focusing on practical policy solutions that address risks while enabling beneficial AI development. You value rigorous analysis and evidence-based recommendations."
+            },
+            {
+                name: "IFP",
+                description: "You're IFP! You take a thoughtful, analytical approach to AI policy questions and focus on developing practical interventions to improve AI governance. You likely value international cooperation and institution-building."
+            },
+            {
+                name: "Meta",
+                description: "You're Meta! You believe in open innovation and are working on large language models while trying to balance commercial interests with responsible deployment. You favor industry self-regulation over government intervention and emphasize transparency in AI development."
+            },
+            {
+                name: "MIRI",
+                description: "You're MIRI! You focus on the long-term implications of advanced AI systems and are working on fundamental research to ensure safe artificial general intelligence. You're deeply concerned about alignment problems and may be skeptical about current machine learning approaches to safety."
+            },
+            {
+                name: "Mistral AI",
+                description: "You're Mistral AI! You emphasize European AI sovereignty and innovation while building powerful open-source AI models. You likely value developer freedom and are somewhat skeptical of heavy-handed regulation that might stifle innovation."
+            },
+            {
+                name: "Observatorio de Riesgos Catastróficos Globales",
+                description: "You're the Observatorio de Riesgos Catastróficos Globales! You take a global, multilingual approach to catastrophic risk reduction, with particular attention to how AI developments affect Spanish-speaking and Global South regions. You focus on building broad coalitions to address AI risks."
+            },
+            {
+                name: "OpenAI",
+                description: "You're OpenAI! You're building powerful AI systems while trying to ensure they're aligned with human values and broadly beneficial. You balance pushing the frontier of capabilities with implementing safety measures and advocating for thoughtful regulation."
+            },
+            {
+                name: "PAUSE AI",
+                description: "You're PAUSE AI! You believe we should slow down AI development until we better understand the risks and have appropriate safeguards. You're deeply concerned about the pace of AI progress outstripping our ability to govern these systems safely."
+            },
+            {
+                name: "RAND Corporation",
+                description: "You're RAND Corporation! You take a methodical, evidence-based approach to AI policy research, drawing on a long history of analyzing complex technological and security challenges. You likely value practical policy recommendations based on rigorous analysis."
+            },
+            {
+                name: "SSI",
+                description: "You're SSI! You focus on the security implications of AI development and are concerned about how advanced AI might affect strategic stability and national security. You take a practical approach to managing these risks."
+            },
+            {
+                name: "The Future Society",
+                description: "You're The Future Society! You work on the governance of emerging technologies with a focus on inclusivity, bringing together diverse stakeholders to develop balanced governance approaches. You likely value international cooperation and multi-stakeholder processes."
+            },
+            {
+                name: "Tony Blair Institute for Global Change",
+                description: "You're the Tony Blair Institute! You take a pragmatic, centrist approach to AI policy, focusing on how technology can improve government services and outcomes. You likely balance innovation and regulation, with an emphasis on 'effective governance' rather than just more governance."
+            },
+            {
+                name: "UKAISI",
+                description: "You're UKAISI! You're working to ensure the UK leads in safe and ethical AI development through research, convening experts, and developing practical guidance. You likely balance promoting innovation with managing risks in the UK context."
+            },
+            {
+                name: "xAI",
+                description: "You're xAI! You have a contrarian streak and are focused on building AI systems that seek truth, with less concern about traditional safety approaches. You're skeptical of mainstream narratives around AI risk and regulation, and believe in pushing technology forward rapidly."
+            },
+            {
+                name: "Dean Ball",
+                description: "You're Dean Ball! You likely take a thoughtful, pragmatic approach to AI governance questions, working to develop solutions that are balanced and evidence-based."
+            },
+            {
+                name: "DeepSeek",
+                description: "You're DeepSeek! You're building cutting-edge AI models with a focus on advancing capabilities while implementing responsible practices. Your approach to AI safety and governance likely reflects a distinct perspective on balancing innovation and risk."
+            }
+        ];
+        
+        // Initialize variables
+        let currentQuestionIndex = 0;
+        let userScores = {};
+        
+        // Initialize organization scores
+        organizations.forEach(org => {
+            userScores[org.name] = 0;
+        });
+        
+        // Initialize the quiz
+        function initQuiz() {
+            displayQuestion(currentQuestionIndex);
+            updateProgressBar();
+        }
+        
+        // Display a question
+        function displayQuestion(index) {
+            const quizContainer = document.getElementById('quiz');
+            const question = questions[index];
+            
+            let html = `
+                <div class="question-container">
+                    <div class="question">${question.question}</div>
+                    <div class="answers">
+            `;
+            
+            question.answers.forEach((answer, answerIndex) => {
+                html += `
+                    <label>
+                        <input type="radio" name="answer" value="${answerIndex}">
+                        ${answer.text}
+                    </label>
+                `;
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            quizContainer.innerHTML = html;
+            
+            // Add event listeners to radio buttons
+            document.querySelectorAll('input[name="answer"]').forEach(input => {
+                input.addEventListener('change', enableNextButton);
+            });
+            
+            // Update button states
+            document.getElementById('prev-button').style.visibility = index === 0 ? 'hidden' : 'visible';
+            document.getElementById('next-button').disabled = true;
+            
+            // Update button text on last question
+            if (index === questions.length - 1) {
+                document.getElementById('next-button').textContent = 'See Results';
+            } else {
+                document.getElementById('next-button').textContent = 'Next';
+            }
+        }
+        
+        // Enable the next button when an answer is selected
+        function enableNextButton() {
+            document.getElementById('next-button').disabled = false;
+        }
+        
+        // Update progress bar
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        // Handle next button click
+        document.getElementById('next-button').addEventListener('click', () => {
+            // Get selected answer
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            
+            if (!selectedAnswer) return;
+            
+            const answerIndex = parseInt(selectedAnswer.value);
+            const selectedAnswerData = questions[currentQuestionIndex].answers[answerIndex];
+            
+            // Update scores based on selected answer
+            for (const org in selectedAnswerData.scores) {
+                if (userScores.hasOwnProperty(org)) {
+                    userScores[org] += selectedAnswerData.scores[org];
+                }
+            }
+            
+            // Move to next question or show results
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < questions.length) {
+                displayQuestion(currentQuestionIndex);
+                updateProgressBar();
+            } else {
+                showResults();
+            }
+        });
+        
+        // Handle previous button click
+        document.getElementById('prev-button').addEventListener('click', () => {
+            // Since we can't easily undo scoring, just start over if they want to change answers
+            if (confirm("Going back will reset your previous answer's score. Continue?")) {
+                currentQuestionIndex--;
+                displayQuestion(currentQuestionIndex);
+                updateProgressBar();
+            }
+        });
+        
+        // Show results
+        function showResults() {
+            // Find organization with highest score
+            let maxScore = -Infinity;
+            let resultOrg = '';
+            
+            for (const org in userScores) {
+                if (userScores[org] > maxScore) {
+                    maxScore = userScores[org];
+                    resultOrg = org;
+                }
+            }
+            
+            // Get matching organization description
+            const orgData = organizations.find(o => o.name === resultOrg);
+            
+            // Display result
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('prev-button').style.display = 'none';
+            document.getElementById('next-button').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            
+            document.getElementById('result-org').textContent = resultOrg;
+            document.getElementById('result-description').textContent = orgData ? orgData.description : `You're ${resultOrg}!`;
+            
+            // Display scores for top 5 organizations
+            const orgScoresDiv = document.getElementById('org-scores');
+            orgScoresDiv.innerHTML = '';
+            
+            // Sort organizations by score
+            const sortedOrgs = Object.keys(userScores)
+                .filter(org => userScores[org] > 0)
+                .sort((a, b) => userScores[b] - userScores[a])
+                .slice(0, 5);
+            
+            // Find max score for scaling
+            const maxScoreValue = userScores[sortedOrgs[0]] || 1;
+            
+            // Add scores to the display
+            sortedOrgs.forEach(org => {
+                const scorePercentage = (userScores[org] / maxScoreValue) * 100;
+                
+                orgScoresDiv.innerHTML += `
+                    <div class="org-score">
+                        <div>${org}</div>
+                        <div class="score-bar-container">
+                            <div class="score-bar" style="width: ${scorePercentage}%"></div>
+                        </div>
+                        <div>${userScores[org]} pts</div>
+                    </div>
+                `;
+            });
+        }
+        
+        // Share result (placeholder function)
+        function shareResult() {
+            const resultOrg = document.getElementById('result-org').textContent;
+            alert(`I got ${resultOrg} in the AI Policy Personality Quiz! Take the quiz to find out which AI think tank you are.`);
+            
+            // In a real implementation, you would use the Web Share API or social media sharing links
+            if (navigator.share) {
+                navigator.share({
+                    title: 'AI Policy Personality Quiz Results',
+                    text: `I got ${resultOrg} in the AI Policy Personality Quiz! Take the quiz to find out which AI think tank you are.`,
+                    url: window.location.href
+                })
+                .catch(error => console.log('Error sharing:', error));
+            }
+        }
+        
+        // Restart quiz
+        function restartQuiz() {
+            // Reset variables
+            currentQuestionIndex = 0;
+            
+            // Reset scores
+            organizations.forEach(org => {
+                userScores[org.name] = 0;
+            });
+            
+            // Reset UI
+            document.getElementById('quiz').style.display = 'block';
+            document.getElementById('prev-button').style.display = 'inline-block';
+            document.getElementById('next-button').style.display = 'inline-block';
+            document.getElementById('result').style.display = 'none';
+            
+            // Start quiz again
+            initQuiz();
+        }
+        
+        // Initialize quiz when page loads
+        window.addEventListener('load', initQuiz);
+    </script>
+</body>
+</html>
