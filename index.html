@@ -840,13 +840,13 @@
         // Share result (placeholder function)
         function shareResult() {
             const resultOrg = document.getElementById('result-org').textContent;
-            alert(`I got ${resultOrg} in the AI Policy Personality Quiz! Take the quiz to find out which AI think tank you are.`);
+            alert(`I got ${resultOrg} in the AI Policy Personality Quiz! Take the quiz to find out which AI Policy org you are.`);
             
             // In a real implementation, you would use the Web Share API or social media sharing links
             if (navigator.share) {
                 navigator.share({
                     title: 'AI Policy Personality Quiz Results',
-                    text: `I got ${resultOrg} in the AI Policy Personality Quiz! Take the quiz to find out which AI think tank you are.`,
+                    text: `I got ${resultOrg} in the AI Policy Personality Quiz! Take the quiz to find out which AI policy org you are.`,
                     url: window.location.href
                 })
                 .catch(error => console.log('Error sharing:', error));
