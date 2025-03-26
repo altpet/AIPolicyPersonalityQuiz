@@ -5,191 +5,230 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Which AI Policy Organisation Are You? - April Fools Quiz</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f7fa;
-            color: #333;
-        }
-        
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        
-        .april-fools {
-            font-size: 14px;
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 30px;
-            color: #e74c3c;
-        }
-        
-        .intro {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .quiz-container {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .question-container {
-            margin-bottom: 30px;
-        }
-        
-        .question {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
-        
-        .answers {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        label {
-            display: block;
-            padding: 12px 15px;
-            background-color: #ecf0f1;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        label:hover {
-            background-color: #d6eaf8;
-        }
-        
-        input[type="radio"] {
-            margin-right: 10px;
-        }
-        
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        
-        button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.2s;
-        }
-        
-        button:hover {
-            background-color: #2980b9;
-        }
-        
-        button:disabled {
-            background-color: #95a5a6;
-            cursor: not-allowed;
-        }
-        
-        #prev-button {
-            visibility: hidden;
-        }
-        
-        .progress-bar {
-            height: 8px;
-            background-color: #ecf0f1;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background-color: #3498db;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        .result-container {
-            display: none;
-            text-align: center;
-        }
-        
-        .result-header {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .result-description {
-            margin-bottom: 20px;
-            text-align: left;
-            line-height: 1.6;
-        }
-        
-        .share-buttons {
-            margin-top: 20px;
-        }
-        
-        .restart-button {
-            margin-top: 20px;
-            background-color: #e74c3c;
-        }
-        
-        .restart-button:hover {
-            background-color: #c0392b;
-        }
-        
-        .result-score {
-            margin-top: 30px;
-            font-size: 14px;
-            text-align: left;
-        }
-        
-        .org-score {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .score-bar-container {
-            width: 60%;
-            background-color: #ecf0f1;
-            height: 10px;
-            border-radius: 5px;
-            margin-top: 5px;
-        }
-        
-        .score-bar {
-            height: 100%;
-            background-color: #3498db;
-            border-radius: 5px;
-            width: 0;
-        }
-        
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            
-            .quiz-container {
-                padding: 15px;
-            }
-            
-            .question {
-                font-size: 16px;
-            }
-        }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff8f0;
+    color: #4a4a4a;
+}
+
+h1 {
+    color: #e74c3c;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2.2rem;
+    font-weight: 600;
+}
+
+.april-fools {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: #e67e22;
+    font-weight: 500;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+}
+
+.quiz-container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(231, 76, 60, 0.1);
+    border: 1px solid #f1d5d2;
+}
+
+.question-container {
+    margin-bottom: 35px;
+}
+
+.question {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #e74c3c;
+    border-left: 4px solid #e74c3c;
+    padding-left: 15px;
+}
+
+.answers {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    display: block;
+    padding: 15px 18px;
+    background-color: #fff5f5;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #f8d7d7;
+}
+
+label:hover {
+    background-color: #ffe6e6;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(231, 76, 60, 0.1);
+}
+
+input[type="radio"] {
+    margin-right: 12px;
+    accent-color: #e74c3c;
+    transform: scale(1.2);
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.2);
+}
+
+button:hover {
+    background-color: #d44637;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(231, 76, 60, 0.3);
+}
+
+button:disabled {
+    background-color: #f1a599;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#prev-button {
+    visibility: hidden;
+    background-color: #95a5a6;
+}
+
+#prev-button:hover {
+    background-color: #7f8c8d;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #f8d7d7;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #e74c3c;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.result-container {
+    display: none;
+    text-align: center;
+}
+
+.result-header {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #e74c3c;
+}
+
+.result-description {
+    margin-bottom: 25px;
+    text-align: left;
+    line-height: 1.8;
+    font-size: 1.05rem;
+    background-color: #fff5f5;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #e74c3c;
+}
+
+.share-buttons {
+    margin-top: 25px;
+}
+
+.restart-button {
+    margin-top: 25px;
+    background-color: #3498db;
+}
+
+.restart-button:hover {
+    background-color: #2980b9;
+}
+
+.result-score {
+    margin-top: 35px;
+    font-size: 16px;
+    text-align: left;
+}
+
+.result-score h3 {
+    color: #e74c3c;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.org-score {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f8d7d7;
+    align-items: center;
+}
+
+.score-bar-container {
+    width: 60%;
+    background-color: #f8d7d7;
+    height: 12px;
+    border-radius: 6px;
+    margin-top: 0;
+    overflow: hidden;
+}
+
+.score-bar {
+    height: 100%;
+    background-color: #e74c3c;
+    border-radius: 6px;
+    width: 0;
+    transition: width 1s ease-out;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+    
+    .quiz-container {
+        padding: 20px;
+    }
+    
+    .question {
+        font-size: 18px;
+    }
+}
     </style>
 </head>
 <body>
