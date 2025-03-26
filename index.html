@@ -215,6 +215,15 @@ button:disabled {
     width: 0;
     transition: width 1s ease-out;
 }
+        
+.result-image {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 0 auto 20px auto;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 
 @media (max-width: 600px) {
     body {
@@ -601,117 +610,143 @@ button:disabled {
             }
         ];
         
-        // Organization descriptions
-        const organizations = [
-            {
-                name: "Ada Lovelace Institute",
-                description: "You're the Ada Lovelace Institute! You prioritize ethics, rights, and justice in AI development. You're deeply concerned about algorithmic bias, discrimination, and ensuring tech aligns with societal values. You likely believe powerful AI systems need strong external regulation rather than industry self-governance."
-            },
-            {
-                name: "AI Now",
-                description: "You're AI Now! You focus on the social implications of AI with a critical lens on power dynamics in tech. You're concerned about labor issues, surveillance, and discrimination in AI systems. You believe in centering marginalized communities in AI ethics discussions and are skeptical of big tech's self-regulation efforts."
-            },
-            {
-                name: "Anthropic",
-                description: "You're Anthropic! You believe in building frontier AI systems that are steerable, interpretable, and honest. While you work on advanced AI capabilities, you emphasize the importance of safety research and responsible deployment practices. You advocate for thoughtful regulation while maintaining industry innovation."
-            },
-            {
-                name: "c.f.g",
-                description: "You're c.f.g! You take an academic approach to AI governance challenges and focus on global coordination mechanisms. You're likely concerned about technical AI safety but also emphasize institutional design and governance frameworks to manage advanced AI. You publish thoughtful analyses without being alarmist."
-            },
-            {
-                name: "Center for AI Safety",
-                description: "You're the Center for AI Safety! You're focused on reducing catastrophic risks from advanced AI systems through technical research. You're concerned about alignment problems and the potential for unintended consequences from powerful AI. You advocate for safety measures while acknowledging the benefits of AI progress."
-            },
-            {
-                name: "Centre for the Governance of AI",
-                description: "You're the Centre for the Governance of AI! You conduct research on governance challenges posed by transformative AI and aim to build the field of AI governance. You likely take a balanced, evidence-based approach to analyzing AI risks and opportunities, with an eye toward institutional design."
-            },
-            {
-                name: "CEPS",
-                description: "You're CEPS! As a European think tank, you approach AI policy from a distinctly EU perspective, emphasizing values like human dignity, freedom, democracy, and rule of law. You're likely focused on regulatory frameworks that protect rights while enabling European innovation and competitiveness."
-            },
-            {
-                name: "Epoch AI",
-                description: "You're Epoch AI! You focus on AI forecasting and understanding the trajectory of AI capabilities. You take a data-driven approach to analyzing AI progress and believe that good forecasting is essential for effective governance and risk management."
-            },
-            {
-                name: "EU AI Office",
-                description: "You're the EU AI Office! You believe in creating a balanced regulatory framework for AI that protects fundamental rights while enabling European innovation. You take a thorough, considered approach to policy and are focused on implementing the EU AI Act and other regulatory measures."
-            },
-            {
-                name: "Future of Life Institute",
-                description: "You're the Future of Life Institute! You're concerned about existential risks from advanced technologies and advocate for cautious, thoughtful AI development. You likely support pauses or slowdowns in cutting-edge AI development to allow safety research and governance mechanisms to catch up."
-            },
-            {
-                name: "Google DeepMind",
-                description: "You're Google DeepMind! You're working on cutting-edge AI research while trying to address safety concerns. You believe in scientific progress coupled with responsible innovation and likely support a mix of industry self-regulation and government oversight."
-            },
-            {
-                name: "IAPS (Institute for AI Policy and Strategy)",
-                description: "You're IAPS! You take a balanced approach to AI governance, focusing on practical policy solutions that address risks while enabling beneficial AI development. You value rigorous analysis and evidence-based recommendations."
-            },
-            {
-                name: "IFP",
-                description: "You're IFP! You take a thoughtful, analytical approach to AI policy questions and focus on developing practical interventions to improve AI governance. You likely value international cooperation and institution-building."
-            },
-            {
-                name: "Meta",
-                description: "You're Meta! You believe in open innovation and are working on large language models while trying to balance commercial interests with responsible deployment. You favor industry self-regulation over government intervention and emphasize transparency in AI development."
-            },
-            {
-                name: "MIRI",
-                description: "You're MIRI! You focus on the long-term implications of advanced AI systems and are working on fundamental research to ensure safe artificial general intelligence. You're deeply concerned about alignment problems and may be skeptical about current machine learning approaches to safety."
-            },
-            {
-                name: "Mistral AI",
-                description: "You're Mistral AI! You emphasize European AI sovereignty and innovation while building powerful open-source AI models. You likely value developer freedom and are somewhat skeptical of heavy-handed regulation that might stifle innovation."
-            },
-            {
-                name: "Observatorio de Riesgos Catastróficos Globales",
-                description: "You're the Observatorio de Riesgos Catastróficos Globales! You take a global, multilingual approach to catastrophic risk reduction, with particular attention to how AI developments affect Spanish-speaking and Global South regions. You focus on building broad coalitions to address AI risks."
-            },
-            {
-                name: "OpenAI",
-                description: "You're OpenAI! You're building powerful AI systems while trying to ensure they're aligned with human values and broadly beneficial. You balance pushing the frontier of capabilities with implementing safety measures and advocating for thoughtful regulation."
-            },
-            {
-                name: "PAUSE AI",
-                description: "You're PAUSE AI! You believe we should slow down AI development until we better understand the risks and have appropriate safeguards. You're deeply concerned about the pace of AI progress outstripping our ability to govern these systems safely."
-            },
-            {
-                name: "RAND Corporation",
-                description: "You're RAND Corporation! You take a methodical, evidence-based approach to AI policy research, drawing on a long history of analyzing complex technological and security challenges. You likely value practical policy recommendations based on rigorous analysis."
-            },
-            {
-                name: "SSI",
-                description: "You're SSI! You focus on the security implications of AI development and are concerned about how advanced AI might affect strategic stability and national security. You take a practical approach to managing these risks."
-            },
-            {
-                name: "The Future Society",
-                description: "You're The Future Society! You work on the governance of emerging technologies with a focus on inclusivity, bringing together diverse stakeholders to develop balanced governance approaches. You likely value international cooperation and multi-stakeholder processes."
-            },
-            {
-                name: "Tony Blair Institute for Global Change",
-                description: "You're the Tony Blair Institute! You take a pragmatic, centrist approach to AI policy, focusing on how technology can improve government services and outcomes. You likely balance innovation and regulation, with an emphasis on 'effective governance' rather than just more governance."
-            },
-            {
-                name: "UKAISI",
-                description: "You're UKAISI! You're working to ensure the UK leads in safe and ethical AI development through research, convening experts, and developing practical guidance. You likely balance promoting innovation with managing risks in the UK context."
-            },
-            {
-                name: "xAI",
-                description: "You're xAI! You have a contrarian streak and are focused on building AI systems that seek truth, with less concern about traditional safety approaches. You're skeptical of mainstream narratives around AI risk and regulation, and believe in pushing technology forward rapidly."
-            },
-            {
-                name: "Dean Ball",
-                description: "You're Dean Ball! You likely take a thoughtful, pragmatic approach to AI governance questions, working to develop solutions that are balanced and evidence-based."
-            },
-            {
-                name: "DeepSeek",
-                description: "You're DeepSeek! You're building cutting-edge AI models with a focus on advancing capabilities while implementing responsible practices. Your approach to AI safety and governance likely reflects a distinct perspective on balancing innovation and risk."
-            }
-        ];
+const organizations = [
+    {
+        name: "Ada Lovelace Institute",
+        description: "You're the Ada Lovelace Institute! You prioritize ethics, rights, and justice in AI development. You're deeply concerned about algorithmic bias, discrimination, and ensuring tech aligns with societal values. You likely believe powerful AI systems need strong external regulation rather than industry self-governance.",
+        imageUrl: "https://via.placeholder.com/200x200/3498db/ffffff?text=Ada+Lovelace+Institute"
+    },
+    {
+        name: "AI Now",
+        description: "You're AI Now! You focus on the social implications of AI with a critical lens on power dynamics in tech. You're concerned about labor issues, surveillance, and discrimination in AI systems. You believe in centering marginalized communities in AI ethics discussions and are skeptical of big tech's self-regulation efforts.",
+        imageUrl: "https://via.placeholder.com/200x200/e74c3c/ffffff?text=AI+Now"
+    },
+    {
+        name: "Anthropic",
+        description: "You're Anthropic! You believe in building frontier AI systems that are steerable, interpretable, and honest. While you work on advanced AI capabilities, you emphasize the importance of safety research and responsible deployment practices. You advocate for thoughtful regulation while maintaining industry innovation.",
+        imageUrl: "https://via.placeholder.com/200x200/9b59b6/ffffff?text=Anthropic"
+    },
+    {
+        name: "c.f.g",
+        description: "You're c.f.g! You take an academic approach to AI governance challenges and focus on global coordination mechanisms. You're likely concerned about technical AI safety but also emphasize institutional design and governance frameworks to manage advanced AI. You publish thoughtful analyses without being alarmist.",
+        imageUrl: "https://via.placeholder.com/200x200/2ecc71/ffffff?text=c.f.g"
+    },
+    {
+        name: "Center for AI Safety",
+        description: "You're the Center for AI Safety! You're focused on reducing catastrophic risks from advanced AI systems through technical research. You're concerned about alignment problems and the potential for unintended consequences from powerful AI. You advocate for safety measures while acknowledging the benefits of AI progress.",
+        imageUrl: "https://via.placeholder.com/200x200/f39c12/ffffff?text=Center+for+AI+Safety"
+    },
+    {
+        name: "Centre for the Governance of AI",
+        description: "You're the Centre for the Governance of AI! You conduct research on governance challenges posed by transformative AI and aim to build the field of AI governance. You likely take a balanced, evidence-based approach to analyzing AI risks and opportunities, with an eye toward institutional design.",
+        imageUrl: "https://via.placeholder.com/200x200/1abc9c/ffffff?text=Centre+for+the+Governance+of+AI"
+    },
+    {
+        name: "CEPS",
+        description: "You're CEPS! As a European think tank, you approach AI policy from a distinctly EU perspective, emphasizing values like human dignity, freedom, democracy, and rule of law. You're likely focused on regulatory frameworks that protect rights while enabling European innovation and competitiveness.",
+        imageUrl: "https://via.placeholder.com/200x200/34495e/ffffff?text=CEPS"
+    },
+    {
+        name: "Epoch AI",
+        description: "You're Epoch AI! You focus on AI forecasting and understanding the trajectory of AI capabilities. You take a data-driven approach to analyzing AI progress and believe that good forecasting is essential for effective governance and risk management.",
+        imageUrl: "https://via.placeholder.com/200x200/16a085/ffffff?text=Epoch+AI"
+    },
+    {
+        name: "EU AI Office",
+        description: "You're the EU AI Office! You believe in creating a balanced regulatory framework for AI that protects fundamental rights while enabling European innovation. You take a thorough, considered approach to policy and are focused on implementing the EU AI Act and other regulatory measures.",
+        imageUrl: "https://via.placeholder.com/200x200/2980b9/ffffff?text=EU+AI+Office"
+    },
+    {
+        name: "Future of Life Institute",
+        description: "You're the Future of Life Institute! You're concerned about existential risks from advanced technologies and advocate for cautious, thoughtful AI development. You likely support pauses or slowdowns in cutting-edge AI development to allow safety research and governance mechanisms to catch up.",
+        imageUrl: "https://via.placeholder.com/200x200/8e44ad/ffffff?text=Future+of+Life+Institute"
+    },
+    {
+        name: "Google DeepMind",
+        description: "You're Google DeepMind! You're working on cutting-edge AI research while trying to address safety concerns. You believe in scientific progress coupled with responsible innovation and likely support a mix of industry self-regulation and government oversight.",
+        imageUrl: "https://via.placeholder.com/200x200/27ae60/ffffff?text=Google+DeepMind"
+    },
+    {
+        name: "IAPS (Institute for AI Policy and Strategy)",
+        description: "You're IAPS! You take a balanced approach to AI governance, focusing on practical policy solutions that address risks while enabling beneficial AI development. You value rigorous analysis and evidence-based recommendations.",
+        imageUrl: "https://via.placeholder.com/200x200/d35400/ffffff?text=IAPS"
+    },
+    {
+        name: "IFP",
+        description: "You're IFP! You take a thoughtful, analytical approach to AI policy questions and focus on developing practical interventions to improve AI governance. You likely value international cooperation and institution-building.",
+        imageUrl: "https://via.placeholder.com/200x200/7f8c8d/ffffff?text=IFP"
+    },
+    {
+        name: "Meta",
+        description: "You're Meta! You believe in open innovation and are working on large language models while trying to balance commercial interests with responsible deployment. You favor industry self-regulation over government intervention and emphasize transparency in AI development.",
+        imageUrl: "https://via.placeholder.com/200x200/3498db/ffffff?text=Meta"
+    },
+    {
+        name: "MIRI",
+        description: "You're MIRI! You focus on the long-term implications of advanced AI systems and are working on fundamental research to ensure safe artificial general intelligence. You're deeply concerned about alignment problems and may be skeptical about current machine learning approaches to safety.",
+        imageUrl: "https://via.placeholder.com/200x200/c0392b/ffffff?text=MIRI"
+    },
+    {
+        name: "Mistral AI",
+        description: "You're Mistral AI! You emphasize European AI sovereignty and innovation while building powerful open-source AI models. You likely value developer freedom and are somewhat skeptical of heavy-handed regulation that might stifle innovation.",
+        imageUrl: "https://via.placeholder.com/200x200/2c3e50/ffffff?text=Mistral+AI"
+    },
+    {
+        name: "Observatorio de Riesgos Catastróficos Globales",
+        description: "You're the Observatorio de Riesgos Catastróficos Globales! You take a global, multilingual approach to catastrophic risk reduction, with particular attention to how AI developments affect Spanish-speaking and Global South regions. You focus on building broad coalitions to address AI risks.",
+        imageUrl: "https://via.placeholder.com/200x200/e67e22/ffffff?text=Observatorio"
+    },
+    {
+        name: "OpenAI",
+        description: "You're OpenAI! You're building powerful AI systems while trying to ensure they're aligned with human values and broadly beneficial. You balance pushing the frontier of capabilities with implementing safety measures and advocating for thoughtful regulation.",
+        imageUrl: "https://via.placeholder.com/200x200/9b59b6/ffffff?text=OpenAI"
+    },
+    {
+        name: "PAUSE AI",
+        description: "You're PAUSE AI! You believe we should slow down AI development until we better understand the risks and have appropriate safeguards. You're deeply concerned about the pace of AI progress outstripping our ability to govern these systems safely.",
+        imageUrl: "https://via.placeholder.com/200x200/e74c3c/ffffff?text=PAUSE+AI"
+    },
+    {
+        name: "RAND Corporation",
+        description: "You're RAND Corporation! You take a methodical, evidence-based approach to AI policy research, drawing on a long history of analyzing complex technological and security challenges. You likely value practical policy recommendations based on rigorous analysis.",
+        imageUrl: "https://via.placeholder.com/200x200/3498db/ffffff?text=RAND+Corporation"
+    },
+    {
+        name: "SSI",
+        description: "You're SSI! You focus on the security implications of AI development and are concerned about how advanced AI might affect strategic stability and national security. You take a practical approach to managing these risks.",
+        imageUrl: "https://via.placeholder.com/200x200/27ae60/ffffff?text=SSI"
+    },
+    {
+        name: "The Future Society",
+        description: "You're The Future Society! You work on the governance of emerging technologies with a focus on inclusivity, bringing together diverse stakeholders to develop balanced governance approaches. You likely value international cooperation and multi-stakeholder processes.",
+        imageUrl: "https://via.placeholder.com/200x200/f39c12/ffffff?text=The+Future+Society"
+    },
+    {
+        name: "Tony Blair Institute for Global Change",
+        description: "You're the Tony Blair Institute! You take a pragmatic, centrist approach to AI policy, focusing on how technology can improve government services and outcomes. You likely balance innovation and regulation, with an emphasis on 'effective governance' rather than just more governance.",
+        imageUrl: "https://via.placeholder.com/200x200/1abc9c/ffffff?text=Tony+Blair+Institute"
+    },
+    {
+        name: "UKAISI",
+        description: "You're UKAISI! You're working to ensure the UK leads in safe and ethical AI development through research, convening experts, and developing practical guidance. You likely balance promoting innovation with managing risks in the UK context.",
+        imageUrl: "https://via.placeholder.com/200x200/34495e/ffffff?text=UKAISI"
+    },
+    {
+        name: "xAI",
+        description: "You're xAI! You have a contrarian streak and are focused on building AI systems that seek truth, with less concern about traditional safety approaches. You're skeptical of mainstream narratives around AI risk and regulation, and believe in pushing technology forward rapidly.",
+        imageUrl: "https://via.placeholder.com/200x200/16a085/ffffff?text=xAI"
+    },
+    {
+        name: "Dean Ball",
+        description: "You're Dean Ball! You likely take a thoughtful, pragmatic approach to AI governance questions, working to develop solutions that are balanced and evidence-based.",
+        imageUrl: "https://via.placeholder.com/200x200/2980b9/ffffff?text=Dean+Ball"
+    },
+    {
+        name: "DeepSeek",
+        description: "You're DeepSeek! You're building cutting-edge AI models with a focus on advancing capabilities while implementing responsible practices. Your approach to AI safety and governance likely reflects a distinct perspective on balancing innovation and risk.",
+        imageUrl: "https://via.placeholder.com/200x200/8e44ad/ffffff?text=DeepSeek"
+    }
+];
         
         // Initialize variables
         let currentQuestionIndex = 0;
@@ -844,9 +879,31 @@ button:disabled {
             document.getElementById('next-button').style.display = 'none';
             document.getElementById('result').style.display = 'block';
             
+            // Inside showResults function:
             document.getElementById('result-org').textContent = resultOrg;
             document.getElementById('result-description').textContent = orgData ? orgData.description : `You're ${resultOrg}!`;
-            
+
+// Add image if available
+const resultHeader = document.querySelector('.result-header').parentNode;
+const existingImage = document.querySelector('.result-image-container');
+if (existingImage) {
+    existingImage.remove();
+}
+
+if (orgData && orgData.imageUrl) {
+    const resultImageDiv = document.createElement('div');
+    resultImageDiv.className = 'result-image-container';
+    
+    const img = document.createElement('img');
+    img.src = orgData.imageUrl;
+    img.alt = resultOrg + " logo";
+    img.className = 'result-image';
+    
+    resultImageDiv.appendChild(img);
+    
+    // Insert after the header but before the description
+    resultHeader.insertBefore(resultImageDiv, document.querySelector('.result-description'));
+}           
             // Display scores for top 5 organizations
             const orgScoresDiv = document.getElementById('org-scores');
             orgScoresDiv.innerHTML = '';
