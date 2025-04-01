@@ -970,7 +970,6 @@ function createResultImage() {
     // Add April Fools subtitle
     ctx.fillStyle = '#e74c3c';
     ctx.font = '16px Arial, sans-serif';
-    ctx.fillText('April Fools\' Edition', canvas.width / 2, 130);
     
     // Add result text
     ctx.fillStyle = '#2c3e50';
@@ -985,7 +984,6 @@ function createResultImage() {
     // Add footer
     ctx.fillStyle = '#3498db';
     ctx.font = '16px Arial, sans-serif';
-    ctx.fillText('Take the quiz at yourdomain.com/ai-quiz', canvas.width / 2, canvas.height - 70);
     
     return canvas.toDataURL('image/png');
 }
