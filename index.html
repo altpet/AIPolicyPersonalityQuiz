@@ -931,166 +931,57 @@ if (orgData && orgData.imageUrl) {
                 `;
             });
         }
-        // Add this function to create an image from the result
-function createResultImage() {
-    // Create a canvas element to render the result
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Set canvas dimensions
-    canvas.width = 800;
-    canvas.height = 500;
-    
-    // Draw background
-    ctx.fillStyle = '#f5f7fa';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw a white card with shadow effect
-    ctx.fillStyle = 'white';
-    // Shadow
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
-    ctx.shadowBlur = 15;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 5;
-    // Card
-    ctx.fillRect(50, 50, canvas.width - 100, canvas.height - 100);
-    
-    // Reset shadow
-    ctx.shadowColor = 'transparent';
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
-    
-    // Add title text
-    ctx.fillStyle = '#2c3e50';
-    ctx.font = 'bold 28px Arial, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('AI Policy Personality Quiz Results', canvas.width / 2, 100);
-    
-    // Add April Fools subtitle
-    ctx.fillStyle = '#e74c3c';
-    ctx.font = '16px Arial, sans-serif';
-    
-    // Add result text
-    ctx.fillStyle = '#2c3e50';
-    ctx.font = 'bold 24px Arial, sans-serif';
-    const resultOrg = document.getElementById('result-org').textContent;
-    ctx.fillText(`You are most like: ${resultOrg}`, canvas.width / 2, 180);
-    
-    // Add organization description
-    const description = document.getElementById('result-description').textContent;
-    wrapText(ctx, description, canvas.width / 2, 230, canvas.width - 150, 24);
-    
-    // Add footer
-    ctx.fillStyle = '#3498db';
-    ctx.font = '16px Arial, sans-serif';
-    
-    return canvas.toDataURL('image/png');
-}
 
-// Helper function to wrap text in canvas
-function wrapText(context, text, x, y, maxWidth, lineHeight) {
-    context.textAlign = 'center';
-    context.font = '16px Arial, sans-serif';
-    context.fillStyle = '#333333';
-    
-    const words = text.split(' ');
-    let line = '';
-    let testLine = '';
-    let lineCount = 0;
-    
-    for (let n = 0; n < words.length; n++) {
-        testLine = line + words[n] + ' ';
-        const metrics = context.measureText(testLine);
-        const testWidth = metrics.width;
-        
-        if (testWidth > maxWidth && n > 0) {
-            context.fillText(line, x, y + (lineCount * lineHeight));
-            line = words[n] + ' ';
-            lineCount++;
-        } else {
-            line = testLine;
-        }
-    }
-    
-    context.fillText(line, x, y + (lineCount * lineHeight));
-}
 
-        // Replace the existing shareResult function with this updated version
-        function shareResult() {
-            const resultOrg = document.getElementById('result-org').textContent;
-            const shareText = `I got ${resultOrg} in the AI Policy Personality Quiz! Take the quiz to find out which AI Policy org you are.`;
+        // Share result with the organization's image using existing imageUrl property
+        async function shareResult() {
+            const resultOrgName = document.getElementById('result-org').textContent;
+            const shareText = `I got ${resultOrgName} in the AI Policy Personality Quiz! Take the quiz to find out which AI policy org you are.`;
             
-            // Generate image from result
-            const resultImage = createResultImage();
+            // Find the matching organization to get its image
+            const matchedOrg = organizations.find(org => org.name === resultOrgName);
             
-            // Create a container for the download link
-            const shareContainer = document.createElement('div');
-            shareContainer.style.marginTop = '20px';
-            shareContainer.style.textAlign = 'center';
-            
-            // Create download link
-            const downloadLink = document.createElement('a');
-            downloadLink.href = resultImage;
-            downloadLink.download = 'ai-policy-quiz-result.png';
-            downloadLink.className = 'download-button';
-            downloadLink.textContent = 'Download Result Image';
-            downloadLink.style.display = 'inline-block';
-            downloadLink.style.backgroundColor = '#3498db';
-            downloadLink.style.color = 'white';
-            downloadLink.style.padding = '10px 20px';
-            downloadLink.style.borderRadius = '5px';
-            downloadLink.style.textDecoration = 'none';
-            downloadLink.style.margin = '10px';
-            
-            // Create image preview
-            const imgPreview = document.createElement('img');
-            imgPreview.src = resultImage;
-            imgPreview.style.maxWidth = '100%';
-            imgPreview.style.marginTop = '15px';
-            imgPreview.style.borderRadius = '5px';
-            imgPreview.style.boxShadow = '0 3px 10px rgba(0,0,0,0.1)';
-            
-            // Add elements to container
-            shareContainer.appendChild(downloadLink);
-            shareContainer.appendChild(document.createElement('br'));
-            shareContainer.appendChild(imgPreview);
-            
-            // Add the container after the share buttons
-            const shareButtonsDiv = document.querySelector('.share-buttons');
-            shareButtonsDiv.parentNode.insertBefore(shareContainer, shareButtonsDiv.nextSibling);
-            
-            // Web Share API if available
-            if (navigator.share) {
-                try {
-                    // Create a Blob from the image
-                    fetch(resultImage)
-                        .then(res => res.blob())
-                        .then(blob => {
-                            const file = new File([blob], 'quiz-result.png', { type: 'image/png' });
-                            
-                            navigator.share({
-                                title: 'AI Policy Personality Quiz Results',
-                                text: shareText,
-                                url: window.location.href,
-                                files: [file]
-                            }).catch(error => {
-                                console.log('Error sharing with files, falling back to text-only share', error);
-                                // Fall back to text-only share if sharing with files fails
-                                navigator.share({
-                                    title: 'AI Policy Personality Quiz Results',
-                                    text: shareText,
-                                    url: window.location.href
-                                });
-                            });
-                        });
-                } catch (error) {
-                    console.log('Error in share function:', error);
+            if (!matchedOrg || !matchedOrg.imageUrl) {
+                // Fallback to text-only if no matching org or no image
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'AI Policy Personality Quiz Results',
+                        text: shareText
+                    });
+                } else {
                     alert(shareText);
                 }
-            } else {
-                // Fallback for browsers that don't support Web Share API
-                alert(shareText + '\n\nA download link for your result image has been added below.');
+                return;
+            }
+            
+            try {
+                if (navigator.share) {
+                    // Check if browser supports sharing files
+                    if (navigator.canShare && navigator.canShare({ files: [new File([''], 'test.txt')] })) {
+                        // Fetch the organization image and convert to blob
+                        const response = await fetch(matchedOrg.imageUrl);
+                        const blob = await response.blob();
+                        const file = new File([blob], 'quiz-result.jpg', { type: 'image/jpeg' });
+                        
+                        navigator.share({
+                            title: 'AI Policy Personality Quiz Results',
+                            text: shareText,
+                            files: [file]
+                        });
+                    } else {
+                        // Fallback to text-only sharing
+                        navigator.share({
+                            title: 'AI Policy Personality Quiz Results',
+                            text: shareText
+                        });
+                    }
+                } else {
+                    // Fallback for browsers that don't support Web Share API
+                    alert(shareText);
+                }
+            } catch (error) {
+                console.log('Error sharing:', error);
+                alert(shareText);
             }
         }
         
