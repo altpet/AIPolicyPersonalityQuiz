@@ -166,9 +166,7 @@ button:disabled {
     border-left: 4px solid #e74c3c;
 }
 
-.share-buttons {
-    margin-top: 25px;
-}
+
 
 .restart-button {
     margin-top: 25px;
@@ -274,9 +272,7 @@ button:disabled {
 <!--                 </div>
             </div> -->
             
-            <div class="share-buttons">
-                <button onclick="shareResult()">Share Result</button>
-            </div>
+
             <button class="restart-button" onclick="restartQuiz()">Take the Quiz Again</button>
         </div>
     </div>
@@ -931,59 +927,8 @@ if (orgData && orgData.imageUrl) {
                 `;
             });
         }
+        
 
-
-        // Share result with the organization's image using existing imageUrl property
-        async function shareResult() {
-            const resultOrgName = document.getElementById('result-org').textContent;
-            const shareText = `I got ${resultOrgName} in the AI Policy Personality Quiz! Take the quiz to find out which AI policy org you are.`;
-            
-            // Find the matching organization to get its image
-            const matchedOrg = organizations.find(org => org.name === resultOrgName);
-            
-            if (!matchedOrg || !matchedOrg.imageUrl) {
-                // Fallback to text-only if no matching org or no image
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'AI Policy Personality Quiz Results',
-                        text: shareText
-                    });
-                } else {
-                    alert(shareText);
-                }
-                return;
-            }
-            
-            try {
-                if (navigator.share) {
-                    // Check if browser supports sharing files
-                    if (navigator.canShare && navigator.canShare({ files: [new File([''], 'test.txt')] })) {
-                        // Fetch the organization image and convert to blob
-                        const response = await fetch(matchedOrg.imageUrl);
-                        const blob = await response.blob();
-                        const file = new File([blob], 'quiz-result.jpg', { type: 'image/jpeg' });
-                        
-                        navigator.share({
-                            title: 'AI Policy Personality Quiz Results',
-                            text: shareText,
-                            files: [file]
-                        });
-                    } else {
-                        // Fallback to text-only sharing
-                        navigator.share({
-                            title: 'AI Policy Personality Quiz Results',
-                            text: shareText
-                        });
-                    }
-                } else {
-                    // Fallback for browsers that don't support Web Share API
-                    alert(shareText);
-                }
-            } catch (error) {
-                console.log('Error sharing:', error);
-                alert(shareText);
-            }
-        }
         
         // Restart quiz
         function restartQuiz() {
